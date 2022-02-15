@@ -76,10 +76,12 @@ while true; do
     case "$1" in
         -f|--filename)
             filename=$2
+            mail=
             shift 2
             ;;
 	-m|--mail)
             mail=$2
+            filename=
             shift 2
             ;;
         -V|--version)
