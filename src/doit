@@ -21,6 +21,7 @@ else
 fi
 . $LIBDIR/doit.sh
 [ -f $CONFDIR/doit.conf ] && . $CONFDIR/doit.conf
+[ -f ~/.doit.conf ] && . ~/.doit.conf
 
 
 usage()
