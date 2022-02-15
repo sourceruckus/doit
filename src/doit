@@ -14,10 +14,13 @@
 # assume we're in the source tree if $PWD/doit.sh.in exists
 if [ -f $(dirname $0)/doit.sh.in ]; then
     LIBDIR=$(realpath $(dirname $0))
+    CONFDIR=$LIBDIR
 else
     LIBDIR=__LIBDIR__
+    CONFDIR=__CONFDIR__
 fi
 . $LIBDIR/doit.sh
+[ -f $CONFDIR/doit.conf ] && . $CONFDIR/doit.conf
 
 
 usage()
@@ -67,6 +70,7 @@ fi
 set -- $__opts
 
 
+mail=$DEFAULT_MAIL
 # parse the new positional arguments
 while true; do
     case "$1" in
