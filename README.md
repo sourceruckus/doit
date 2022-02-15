@@ -21,4 +21,6 @@ usage: doit OPTIONS CMD...
 
   -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead
                             of logging to a file.
+
+  -V, --version             Show version string and exit.
 </pre>

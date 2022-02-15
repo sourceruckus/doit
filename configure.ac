@@ -60,6 +60,7 @@ m4_foreach_w([P], NEEDED_PROGS,
 
 AC_CONFIG_FILES([Makefile
 		 src/Makefile
+		 src/doit.sh
 		 ])
 AC_OUTPUT
 
@@ -97,4 +98,5 @@ echo "Configuration Options Summary:"
 echo
 echo "Installation:"
 echo "  prefix...............: $prefix"
+echo "  pkgdatadir...........: `expandit $datadir/$PACKAGE_TARNAME`"
 echo

@@ -11,6 +11,15 @@
 # completes.
 
 
+# assume we're in the source tree if $PWD/doit.conf.in exists
+if [ -f $(dirname $0)/doit.conf.in ]; then
+    LIBDIR=$(realpath $(dirname $0))
+else
+    LIBDIR=__LIBDIR__
+fi
+. $LIBDIR/doit.sh
+
+
 usage()
 {
     if [ -n "$*" ]; then

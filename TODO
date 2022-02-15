@@ -1,2 +1,5 @@
 -*- mode: org -*-
 
+- /etc/doit.conf for systemwide default mail address
+
+- ~/.doitrc for user-specific default mail address
