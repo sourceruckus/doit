@@ -5,9 +5,9 @@ Copyright 2020-2022 Michael D Labriola <veggiemike@sourceruckus.org>
 
 Licensed under the GPLv3. See the file COPYING for details. 
 
-Doit executes a command and mails its output and exit status to a specified
-account.  It can also log to a file locally instead of mailing, if that floats
-your boat.
+Doit executes a command in the background and mails its output and exit status
+to a specified account.  It can also log to a file locally instead of mailing,
+if that's what floats your boat.
 
 Get the latest and greatest from https://github.com/sourceruckus/doit.
 

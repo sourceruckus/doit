@@ -10,7 +10,7 @@ m4_ifnblank(doit_devtag,
 
 AC_INIT([Doit], [doit_version], [veggiemike@sourceruckus.org], [doit])
 AC_CONFIG_AUX_DIR([.])
-AC_CONFIG_MACRO_DIR([m4])
+#AC_CONFIG_MACRO_DIR([m4])
 
 AC_SUBST(DOIT_MAJOR_VERSION, doit_major_version)
 AC_SUBST(DOIT_MINOR_VERSION, doit_minor_version)

@@ -19,7 +19,7 @@ uninstall-local:
 	rm -f $(top_docs:%=$(DESTDIR)$(docdir)/%)
 	rm -f $(deb_examples:%=$(DESTDIR)$(docdir)/%)
 
-doit.1:
+doit.1: config.log ./src/doit
 	help2man -o $@ --no-info ./src/doit
 
 

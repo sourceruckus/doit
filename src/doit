@@ -17,8 +17,12 @@ usage()
         echo ERROR: $*
         echo
     fi
-    echo "doit - run something in the background w/ emailed output"
+    echo "Doit - fire-and-forget script mailer."
     echo "Copyright (C) 2020-2022 Michael D Labriola <veggiemike@sourceruckus.org>"
+    echo
+    echo "Doit executes a command in the background and mails its output and exit status"
+    echo "to a specified account.  It can also log to a file locally instead of mailing,"
+    echo "if that's what floats your boat."
     echo
     echo "usage: `basename $0` OPTIONS CMD..."
     echo
@@ -29,6 +33,8 @@ usage()
     echo
     echo "  -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead"
     echo "                            of logging to a file."
+    echo
+    echo "  -V, --version             Show version string and exit."
 }
 
 
@@ -42,8 +48,8 @@ usage()
 #       current positional arguments (e.g, $1, $2).
 #
 __opts=$(getopt -un $0 \
-    -o hf:m: \
-    --long help,filename:,mail: -- $@)
+    -o hf:m:V \
+    --long help,filename:,mail:,version -- $@)
 if [ $? != 0 ]; then
     echo
     usage
@@ -62,6 +68,10 @@ while true; do
 	-m|--mail)
             mail=$2
             shift 2
+            ;;
+        -V|--version)
+            echo "Doit 1.0.0-dev" # FIXME: get this from autotools
+            exit 0
             ;;
 	--)
             # done parsing

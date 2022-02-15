@@ -8,6 +8,6 @@ Depends: bash, mailx
 Maintainer: Michael D Labriola <veggiemike@sourceruckus.org>
 Homepage: https://github.com/sourceruckus/doit
 Description: Doit - fire-and-forget script mailer
- Doit executes a command and mails its output and exit status to a
- specified account.  It can also log to a file locally instead of
- mailing, if that floats your boat.
+ Doit executes a command in the background and mails its output and
+ exit status to a specified account.  It can also log to a file
+ locally instead of mailing, if that's what floats your boat.
