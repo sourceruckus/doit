@@ -11,8 +11,8 @@
 # completes.
 
 
-# assume we're in the source tree if $PWD/doit.conf.in exists
-if [ -f $(dirname $0)/doit.conf.in ]; then
+# assume we're in the source tree if $PWD/doit.sh.in exists
+if [ -f $(dirname $0)/doit.sh.in ]; then
     LIBDIR=$(realpath $(dirname $0))
 else
     LIBDIR=__LIBDIR__
@@ -79,7 +79,7 @@ while true; do
             shift 2
             ;;
         -V|--version)
-            echo "Doit 1.0.0-dev" # FIXME: get this from autotools
+            echo "Doit $VERSION"
             exit 0
             ;;
 	--)
