@@ -1,0 +1,7 @@
+[files]
+.TP
+.I /etc/doit.conf
+System-wide default config file.
+.TP
+.I ~/.doit.conf
+User config file, which is read last.
