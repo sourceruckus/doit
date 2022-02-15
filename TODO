@@ -1,3 +1,4 @@
 -*- mode: org -*-
 
-- ~/.doitrc for user-specific default mail address
+- add Breaks ruckusrd to debian/control once ruckusrd v0.18 is out (w/ doit
+  removed)
