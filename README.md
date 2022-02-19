@@ -14,6 +14,10 @@ Get the latest and greatest from https://github.com/sourceruckus/doit.
 <pre>
 usage: doit OPTIONS CMD...
 
+  -h, --help                Show this help message and exit.
+
+  -V, --version             Show version string and exit.
+
   -f, --filename LOGFILE    Specify output filename.  Both stdout and stderr
                             will be redirected to this file.  When the process
                             finishes, the files last few lines will contain
@@ -21,6 +25,4 @@ usage: doit OPTIONS CMD...
 
   -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead
                             of logging to a file.
-
-  -V, --version             Show version string and exit.
 </pre>

@@ -39,6 +39,10 @@ usage()
     echo
     echo "usage: `basename $0` OPTIONS CMD..."
     echo
+    echo "  -h, --help                Show this help message and exit."
+    echo
+    echo "  -V, --version             Show version string and exit."
+    echo
     echo "  -f, --filename LOGFILE    Specify output filename.  Both stdout and stderr"
     echo "                            will be redirected to this file.  When the process"
     echo "                            finishes, the files last few lines will contain"
@@ -46,8 +50,6 @@ usage()
     echo
     echo "  -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead"
     echo "                            of logging to a file."
-    echo
-    echo "  -V, --version             Show version string and exit."
 }
 
 
