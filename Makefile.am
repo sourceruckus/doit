@@ -7,6 +7,7 @@ deb_examples = debian/control debian/get_deps
 EXTRA_DIST =
 EXTRA_DIST += $(top_docs)
 EXTRA_DIST += $(deb_examples)
+EXTRA_DIST += doit.1.include
 
 man1_MANS = doit.1
 
@@ -19,8 +20,11 @@ uninstall-local:
 	rm -f $(top_docs:%=$(DESTDIR)$(docdir)/%)
 	rm -f $(deb_examples:%=$(DESTDIR)$(docdir)/%)
 
-doit.1: config.log ./src/doit doit.1.include
-	help2man -o $@ --no-info --include doit.1.include ./src/doit
+distclean-local:
+	rm -f $(builddir)/doit.1
+
+doit.1: $(srcdir)/src/doit config.log $(srcdir)/doit.1.include
+	help2man -o $@ --no-info --include $(srcdir)/doit.1.include $<
 
 
 # i know this isn't the right way to do this... but it's how i've been

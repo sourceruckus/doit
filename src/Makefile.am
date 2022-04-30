@@ -1,8 +1,8 @@
 dist_bin_SCRIPTS =
 dist_bin_SCRIPTS += doit
 
-sysconf_DATA =
-sysconf_DATA += doit.conf
+dist_sysconf_DATA =
+dist_sysconf_DATA += doit.conf
 
 pkgdata_DATA =
 pkgdata_DATA += doit.sh
