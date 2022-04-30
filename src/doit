@@ -50,6 +50,10 @@ usage()
     echo
     echo "  -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead"
     echo "                            of logging to a file."
+    echo
+    echo "  -a, --attachment          Send output as an attachment instead of as the email"
+    echo "                            body.  The exit status and timing info will remain"
+    echo "                            in email body."
 }
 
 
@@ -63,8 +67,8 @@ usage()
 #       current positional arguments (e.g, $1, $2).
 #
 __opts=$(getopt -un $0 \
-    -o hf:m:V \
-    --long help,filename:,mail:,version -- $@)
+    -o hf:m:Va \
+    --long help,filename:,mail:,version,attachment -- $@)
 if [ $? != 0 ]; then
     echo
     usage
@@ -74,6 +78,7 @@ set -- $__opts
 
 
 mail=$DEFAULT_MAIL
+attach=
 # parse the new positional arguments
 while true; do
     case "$1" in
@@ -86,6 +91,10 @@ while true; do
             mail=$2
             filename=
             shift 2
+            ;;
+        -a|--attachment)
+            attach=yes
+            shift
             ;;
         -V|--version)
             echo "Doit $VERSION"
@@ -108,8 +117,13 @@ cmd=$*
 if [ -z "$filename" -a -z "$mail" ]; then
     usage "--filename or --mail required"
     exit 1
-elif [ -n "$filename" -a -n "$mail" ]; then
+fi
+if [ -n "$filename" -a -n "$mail" ]; then
     usage "cannot do both --filename and --mail"
+    exit 1
+fi
+if [ -n "$filename" -a -n "$attach" ]; then
+    usage "--attachment only allowed with --mail"
     exit 1
 fi
 if [ -z "$cmd" ]; then
@@ -119,13 +133,79 @@ fi
 
 echo filename: $filename
 echo mail: $mail
+echo attach: $attach
 echo cmd: $cmd
 
-go="{ time ($cmd ; echo -e \"\n\nDOIT: ALL DONE\nRET=\$?\") } 2>&1"
-[ -n "$mail" ] && go+=" | mail -s \"doit $cmd [$PWD]: all done\" $mail"
-[ -n "$filename" ] && go+=" | cat > $filename"
-go+=" &"
+if [ -n "$filename" ]; then
+    go="{ time ($cmd ; echo -e \"\n\nDOIT: ALL DONE\nCMD: $cmd\nPWD: $PWD\nRET: \$?\") } >$filename 2>&1 &"
+    echo $go
+    eval $go
 
-echo $go
+else
+    # email mode - for this we write command output to a tmp file so that we
+    # can print the summary at the TOP of the email (because scrolling in email
+    # is annoying) or perhaps send the output log as an attachment.
+    #
+    # NOTE: This is an order of magnitude more complicated than the original
+    #       redirect-stdout-to-mail approach, but it'll be worth it.
+    #
+    #       We have to create a subproc containing all the extra parsing and
+    #       emailing logic, then execute that disowned in the background and
+    #       exit.
+    #
+    tmpdir=$(mktemp -dt $(basename $0)-XXXX)
+    echo tmpdir: $tmpdir
+    # part 1 - variable expansion
+    cat > $tmpdir/doit.sh <<EOF
+#!/bin/bash
+cmd="$cmd"
+tmpdir="$tmpdir"
+mail="$mail"
+attach="$attach"
+
+EOF
+    # part 2 - no variable expansion
+    cat >> $tmpdir/doit.sh <<'EOF'
+go="time (($cmd) >$tmpdir/cmd.log 2>&1; echo \$? >$tmpdir/exit.status) >$tmpdir/time.log 2>&1"
+#echo $go
 eval $go
+
+ret=$(cat $tmpdir/exit.status)
+
+# prep body of email
+cat > $tmpdir/mail.body <<EOF2
+DOIT: ALL DONE
+CMD: $cmd
+PWD: $PWD
+RET: $ret
+$(cat $tmpdir/time.log)
+EOF2
+
+if [ -n "$attach" ]; then
+    # mail it
+    cat $tmpdir/mail.body | mail -s "doit $cmd [$PWD]: all done" --content-type=text/plain --attach=$tmpdir/cmd.log $mail    
+else
+    # append command output
+    cat >> $tmpdir/mail.body <<EOF2
+
+---- CMD OUTPUT ---------------------------------------------------------------
+$(cat $tmpdir/cmd.log)
+EOF2
+    # mail it
+    cat $tmpdir/mail.body | mail -s "doit $cmd [$PWD]: all done" $mail
+fi
+
+# cleanup
+#
+# NOTE: Seems scary rm -rf'ing a variable that could be messed up... so we do
+#       this the careful way.
+#
+rm $tmpdir/{cmd.log,exit.status,time.log,mail.body,doit.sh}
+rmdir $tmpdir
+EOF
+
+    chmod +x $tmpdir/doit.sh
+    $tmpdir/doit.sh &
+fi
+
 exit 0
