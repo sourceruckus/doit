@@ -1,8 +1,5 @@
 -*- mode: org -*-
 
-- add Breaks ruckusrd to debian/control once ruckusrd v0.18 is out (w/ doit
-  removed)
-
 - add --attach flag to send output as an attachment instead of as the body of
   the email.  or maybe --email-attach?  whatever works better.  keeping the
   status/summary as the body of the email would be super, too.
