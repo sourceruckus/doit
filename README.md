@@ -25,4 +25,20 @@ usage: doit OPTIONS CMD...
 
   -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead
                             of logging to a file.
+
+  -a, --attachment          Send output as an attachment instead of as the email
+                            body.  The exit status and timing info will remain
+                            in email body.
+
+NOTE: If CMD contains any arguments (e.g., -f, --verbose), you'll need to
+      separate it from the rest of the doit commandline via -- (the special
+      getopt stop parsing flag).
+
+NOTE: If CMD is a compound statement, you'll need to quote and escape things
+      appropriately.
+
+example: doit --mail me@myemail.com --attachment -- kernel-builder --stable
+
+example: doit -f ~/build.log -- \
+           "find /boot -type f -exec echo {} \; -exec sleep .1 \; && echo woot"
 </pre>
