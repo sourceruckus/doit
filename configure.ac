@@ -1,9 +1,9 @@
 AC_PREREQ([2.65])
 
 m4_define(doit_major_version, 1)
-m4_define(doit_minor_version, 0)
+m4_define(doit_minor_version, 1)
 m4_define(doit_micro_version, 0)
-m4_define(doit_devtag, [])
+m4_define(doit_devtag, [dev])
 m4_ifnblank(doit_devtag,
 	[m4_define(doit_version, doit_major_version.doit_minor_version.doit_micro_version-doit_devtag)],
 	[m4_define(doit_version, doit_major_version.doit_minor_version.doit_micro_version)])
