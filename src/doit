@@ -54,6 +54,18 @@ usage()
     echo "  -a, --attachment          Send output as an attachment instead of as the email"
     echo "                            body.  The exit status and timing info will remain"
     echo "                            in email body."
+    echo
+    echo "NOTE: If CMD contains any arguments (e.g., -f, --verbose), you'll need to"
+    echo "      separate it from the rest of the doit commandline via -- (the special"
+    echo "      getopt stop parsing flag)."
+    echo
+    echo "NOTE: If CMD is a compound statement, you'll need to quote and escape things"
+    echo "      appropriately."
+    echo
+    echo "example: doit --mail me@myemail.com --attachment -- kernel-builder --stable"
+    echo
+    echo "example: doit -f ~/build.log -- \\"
+    echo "           \"find /boot -type f -exec echo {} \; -exec sleep .1 \; && echo woot\""
 }
 
 
