@@ -51,9 +51,9 @@ usage()
     echo "  -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead"
     echo "                            of logging to a file."
     echo
-    echo "  -a, --attachment          Send output as an attachment instead of as the email"
-    echo "                            body.  The exit status and timing info will remain"
-    echo "                            in email body."
+    echo "  -a, --attachment          Send output as a gzipped attachment instead of as"
+    echo "                            the email body.  The exit status and timing info"
+    echo "                            will remain in email body."
     echo
     echo "NOTE: If CMD contains any arguments (e.g., -f, --verbose), you'll need to"
     echo "      separate it from the rest of the doit commandline via -- (the special"
@@ -194,8 +194,10 @@ $(cat $tmpdir/time.log)
 EOF2
 
 if [ -n "$attach" ]; then
+    # compress it
+    gzip $tmpdir/cmd.log
     # mail it
-    cat $tmpdir/mail.body | mail -s "doit $cmd [$PWD]: all done" --content-type=text/plain --attach=$tmpdir/cmd.log $mail    
+    cat $tmpdir/mail.body | mail -s "doit $cmd [$PWD]: all done" --content-type=text/plain --attach=$tmpdir/cmd.log.gz $mail
 else
     # append command output
     cat >> $tmpdir/mail.body <<EOF2
@@ -212,7 +214,7 @@ fi
 # NOTE: Seems scary rm -rf'ing a variable that could be messed up... so we do
 #       this the careful way.
 #
-rm $tmpdir/{cmd.log,exit.status,time.log,mail.body,doit.sh}
+rm -f $tmpdir/{cmd.log{,.gz},exit.status,time.log,mail.body,doit.sh}
 rmdir $tmpdir
 EOF
 

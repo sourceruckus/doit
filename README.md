@@ -26,9 +26,9 @@ usage: doit OPTIONS CMD...
   -m, --mail EMAILADDRESS   Email stdout/stderr to specified address instead
                             of logging to a file.
 
-  -a, --attachment          Send output as an attachment instead of as the email
-                            body.  The exit status and timing info will remain
-                            in email body.
+  -a, --attachment          Send output as a gzipped attachment instead of as
+                            the email body.  The exit status and timing info
+                            will remain in email body.
 
 NOTE: If CMD contains any arguments (e.g., -f, --verbose), you'll need to
       separate it from the rest of the doit commandline via -- (the special
