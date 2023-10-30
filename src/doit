@@ -2,7 +2,7 @@
 #
 # Doit - fire-and-forget script mailer
 #
-# Copyright 2020-2022 Michael D Labriola <veggiemike@sourceruckus.org>
+# Copyright 2020-2023 Michael D Labriola <veggiemike@sourceruckus.org>
 #
 # Licensed under the GPLv3. See the file COPYING for details. 
 #
@@ -31,7 +31,7 @@ usage()
         echo
     fi
     echo "Doit - fire-and-forget script mailer."
-    echo "Copyright (C) 2020-2022 Michael D Labriola <veggiemike@sourceruckus.org>"
+    echo "Copyright (C) 2020-2023 Michael D Labriola <veggiemike@sourceruckus.org>"
     echo
     echo "Doit executes a command in the background and mails its output and exit status"
     echo "to a specified account.  It can also log to a file locally instead of mailing,"

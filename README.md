@@ -1,7 +1,7 @@
 Doit - fire-and-forget script mailer
 ====================================
 
-Copyright 2020-2022 Michael D Labriola <veggiemike@sourceruckus.org>
+Copyright 2020-2023 Michael D Labriola <veggiemike@sourceruckus.org>
 
 Licensed under the GPLv3. See the file COPYING for details. 
 
