@@ -3,6 +3,11 @@
 For the latest and greatest, see
 https://github.com/sourceruckus/doit/commits/master.
 
+* v1.2.0
+2023-10-31: Doit v1.2.0
+
+- Gzip command output when using --attachment.
+
 * v1.1.0
 2022-05-19: Doit v1.1.0
 
